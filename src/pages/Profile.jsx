@@ -43,7 +43,7 @@ const Profile = () => {
         e.preventDefault();
         const userFormData = new FormData();
         userFormData.append("avatar", updatedImgFile);
-        userFormData.append("nickname", updatedNickname);
+        userFormData.append("nickname", updatedNickname ? updatedNickname : nickname);
         try {
             const data = await updateUserData(userFormData);
             setProfileUpdated(data);

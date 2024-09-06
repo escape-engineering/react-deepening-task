@@ -8,13 +8,13 @@ const Layout = ({ children }) => {
     const isLogin = useIsLogin();
     const setLogout = useLogout();
 
-    useEffect(() => {}, []);
     const handleLogout = () => {
         setLogout();
         localStorage.removeItem("accessToken");
         alert("로그아웃되었습니다! 홈페이지로 이동합니다.");
         navigate("/");
     };
+    useEffect(() => {}, []);
     return (
         <div>
             <header className="border-solid border-red-400 border-2">

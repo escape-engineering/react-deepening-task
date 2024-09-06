@@ -32,6 +32,16 @@ const useAuthStore = create(
                     },
                     isLogin: false,
                 })),
+            updateUserInfo: (userObj) =>
+                set((state) => ({
+                    ...state,
+                    userInfo: {
+                        ...state.userInfo,
+                        avatar: userObj.avatar,
+                        nickname: userObj.nickname,
+                        userId: userObj.userId,
+                    },
+                })),
         }),
         {
             name: "user-storage", // name of the item in the storage (must be unique)
@@ -44,3 +54,4 @@ export const useIsLogin = () => useAuthStore((state) => state.isLogin);
 export const useUserInfo = () => useAuthStore((state) => state.userInfo);
 export const useLogin = () => useAuthStore((state) => state.login);
 export const useLogout = () => useAuthStore((state) => state.logout);
+export const useUpdateUserInfo = () => useAuthStore((state) => state.updateUserInfo);

@@ -16,11 +16,9 @@ export const handleLogin = async (userObj) => {
 
 // const userAccessToken = useUserInfo()
 
-const userAccessToken = localStorage.getItem("accessToken");
-
 export const userInstance = axios.create({
     baseURL: "https://moneyfulpublicpolicy.co.kr",
-    headers: { Authorization: `Bearer ${userAccessToken}` },
+    headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` },
 });
 
 export const getUserData = async () => {

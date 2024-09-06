@@ -1,18 +1,34 @@
 import React, { useEffect } from "react";
 import { getUserData } from "../apis/authApi";
-import { useLogin } from "../zustand/useAuthStore";
+import { useLogin, useLogout, useUpdateUserInfo, useUserInfo } from "../zustand/useAuthStore";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
-    const setUserState = useLogin();
+    const navigate = useNavigate();
+    const setLogout = useLogout();
+    const setProfileUpdated = useUpdateUserInfo();
+    const userInfo = useUserInfo();
 
-    const getData = async () => {
-        const data = await getUserData();
-        setUserState(data);
-        console.log("data :>> ", data);
+    console.log("userInfo :>> ", userInfo);
+
+    const getProfileData = async () => {
+        try {
+            const data = await getUserData();
+            setProfileUpdated(data);
+            console.log("data :>> ", data);
+        } catch (error) {
+            console.log("error :>> ", error);
+            if (error.status == 401) {
+                alert("토큰이 만료되어 로그아웃 되었습니다! 다시 로그인해주세요!");
+                setLogout();
+                localStorage.removeItem("accessToken");
+                navigate("/login");
+            }
+        }
     };
 
     useEffect(() => {
-        getData();
+        getProfileData();
     }, []);
     return <div>Profile</div>;
 };

@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-const useInput = () => {
-    const [text, setText] = useState("");
+const useInput = (initialValue = undefined) => {
+    const [text, setText] = useState(initialValue);
     const handleInputText = (e) => {
         setText(e.target.value);
     };

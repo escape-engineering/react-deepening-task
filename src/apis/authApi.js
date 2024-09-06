@@ -16,12 +16,24 @@ export const handleLogin = async (userObj) => {
 
 // const userAccessToken = useUserInfo()
 
-export const userInstance = axios.create({
+const userInstance = axios.create({
     baseURL: "https://moneyfulpublicpolicy.co.kr",
-    headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` },
+    headers: { "Authorization": `Bearer ${localStorage.getItem("accessToken")}` },
 });
 
 export const getUserData = async () => {
     const response = await userInstance.get("/user");
+    return response.data;
+};
+
+const updateUserInstance = axios.create({
+    baseURL: "https://moneyfulpublicpolicy.co.kr",
+    headers: {
+        "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
+        "Contene-Type": "multipart/form-data",
+    },
+});
+export const updateUserData = async (formData) => {
+    const response = await updateUserInstance.patch("/profile", formData);
     return response.data;
 };

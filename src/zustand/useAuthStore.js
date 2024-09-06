@@ -7,7 +7,7 @@ const useAuthStore = create(
         (set) => ({
             userInfo: {
                 accessToken: null,
-                avatar: null,
+                avatar: "",
                 nickname: null,
                 userId: null,
             },
@@ -16,7 +16,7 @@ const useAuthStore = create(
                 set(() => ({
                     userInfo: {
                         accessToken: userObj.accessToken,
-                        avatar: userObj.avatar,
+                        avatar: userObj.avatar ? userObj.avatar : "",
                         nickname: userObj.nickname,
                         userId: userObj.userId,
                     },
@@ -26,7 +26,7 @@ const useAuthStore = create(
                 set(() => ({
                     userInfo: {
                         accessToken: null,
-                        avatar: null,
+                        avatar: "",
                         nickname: null,
                         userId: null,
                     },
@@ -37,9 +37,8 @@ const useAuthStore = create(
                     ...state,
                     userInfo: {
                         ...state.userInfo,
-                        avatar: userObj.avatar,
+                        avatar: userObj.avatar ? userObj.avatar : "",
                         nickname: userObj.nickname,
-                        userId: userObj.userId,
                     },
                 })),
         }),

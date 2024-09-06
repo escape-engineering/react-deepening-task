@@ -6,8 +6,8 @@ import { useLogin } from "../zustand/useAuthStore";
 
 const Login = () => {
     const navigate = useNavigate();
-    const [userId, handleUserId] = useInput();
-    const [userPassword, handleUserPassword] = useInput();
+    const [userId, handleUserId] = useInput("");
+    const [userPassword, handleUserPassword] = useInput("");
 
     const isReadyToLogin = userId && userPassword;
 

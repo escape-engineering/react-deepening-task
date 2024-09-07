@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useIsLogin, useLogout } from "../zustand/useAuthStore";
+import { useIsLogin, useLogout, useUserInfo } from "../zustand/useAuthStore";
 
 const Layout = ({ children }) => {
     const navigate = useNavigate();

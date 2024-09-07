@@ -6,7 +6,7 @@ const Home = () => {
         <div className="border-solid border-red-400 border-2">
             <h1>너는 뭐가 문제인거니?</h1>
             <ul className="flex flex-row gap-5">
-                <li className="border-solid border-black border-2" onClick={() => navigate("/test/1")}>
+                <li className="border-solid border-black border-2" onClick={() => navigate("/test")}>
                     MBTI 검사
                 </li>
                 <li className="border-solid border-black border-2" onClick={() => navigate("/test/2")}>

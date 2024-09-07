@@ -1,4 +1,5 @@
 import axios from "axios";
+const userAccessToken = localStorage.getItem("accessToken");
 
 const authInstance = axios.create({
     baseURL: "https://moneyfulpublicpolicy.co.kr",
@@ -14,11 +15,9 @@ export const handleLogin = async (userObj) => {
     return response.data;
 };
 
-// const userAccessToken = useUserInfo()
-
 const userInstance = axios.create({
     baseURL: "https://moneyfulpublicpolicy.co.kr",
-    headers: { "Authorization": `Bearer ${localStorage.getItem("accessToken")}` },
+    headers: { "Authorization": `Bearer ${userAccessToken}` },
 });
 
 export const getUserData = async () => {
@@ -29,7 +28,7 @@ export const getUserData = async () => {
 const updateUserInstance = axios.create({
     baseURL: "https://moneyfulpublicpolicy.co.kr",
     headers: {
-        "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
+        "Authorization": `Bearer ${userAccessToken}`,
         "Contene-Type": "multipart/form-data",
     },
 });

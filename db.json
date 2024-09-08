@@ -1,40 +1,18 @@
 {
   "testResults": [
     {
-      "id": "bbbe",
-      "userId": "test13312123",
-      "result": "ESTJ",
-      "visibility": true
-    },
-    {
-      "id": "bca7",
-      "userId": "test13312123",
-      "result": "ESTJ",
-      "visibility": true
-    },
-    {
-      "id": "5ba7",
+      "id": "1421",
+      "nickname": "test133121233",
       "userId": "test133121233",
-      "result": "ENFP",
+      "result": "ENTP",
       "visibility": true
     },
     {
-      "id": "84d6",
-      "userId": "test133121233",
-      "result": "ESTP",
-      "visibility": false
-    },
-    {
-      "id": "72f3",
+      "id": "e053",
+      "nickname": "test1331212334",
       "userId": "test1331212334",
-      "result": "INFJ",
-      "visibility": false
-    },
-    {
-      "id": "e0ca",
-      "userId": "test1331212334",
-      "result": "ISTP",
-      "visibility": false
+      "result": "ENFJ",
+      "visibility": true
     }
   ]
 }

@@ -1,52 +1,62 @@
 import { useLocation } from "react-router-dom";
 import { MBTIDESC } from "../constants";
-import { deleteTestResult, getTargetTestResults, toggleTestResult } from "../apis/testApi";
+import { deleteTestResult, getTargetTestResults, testInstance, toggleTestResult } from "../apis/testApi";
 import { useEffect, useState } from "react";
 import { useUserInfo } from "../zustand/useAuthStore";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 const TestResult = () => {
     const location = useLocation();
     const testedMbti = location?.state;
     const { userId } = useUserInfo();
-    console.log("location :>> ", location);
-    console.log("testedMbti :>> ", testedMbti);
+    const queryClient = useQueryClient();
 
-    const [userMBTIs, setUserMBTIs] = useState([]);
-
-    const getAllMbtiData = async () => {
-        try {
-            const data = await getTargetTestResults();
-            setUserMBTIs(data.filter((el) => el.userId == userId || el.visibility));
-        } catch (error) {
-            console.log("error :>> ", error);
-        }
+    const getAllTestResults = async () => {
+        const response = await testInstance.get("/testResults");
+        const filteredData = response.data.filter((el) => el.userId == userId || el.visibility);
+        return filteredData;
     };
 
-    useEffect(() => {
-        getAllMbtiData();
-    }, []);
+    const {
+        data: userMBTIs,
+        isLoading: userMBTIsLoading,
+        isError: userMBTIsError,
+    } = useQuery({
+        queryKey: ["MBTIS"],
+        queryFn: getAllTestResults,
+    });
 
-    //TODO - tanstackQuery로 바꾸기 적합해 보임
-    const toggleTestData = async (testId, testObj) => {
+    const toggleTestResult = async (testObj) => {
+        await testInstance.patch(`/testResults/${testObj.id}`, testObj);
+    };
+
+    const toggleMutation = useMutation({
+        mutationFn: toggleTestResult,
+        onSuccess: () => queryClient.invalidateQueries(["MBTIS"]),
+        onError: (error) => console.log("error :>> ", error),
+    });
+
+    const handleToggle = (testObj) => {
         const newTestObj = { ...testObj, visibility: !testObj.visibility };
-        try {
-            const data = await toggleTestResult(testId, newTestObj);
-            console.log("data :>> ", data);
-            setUserMBTIs([...userMBTIs].map((el) => (el.id == testId ? { ...el, visibility: !el.visibility } : el)));
-        } catch (error) {
-            console.log("error :>> ", error);
-        }
+        toggleMutation.mutate(newTestObj);
     };
 
-    const deleteTestData = async (testId) => {
-        try {
-            const data = await deleteTestResult(testId);
-            console.log("data :>> ", data);
-            setUserMBTIs([...userMBTIs].filter((el) => el.id != testId));
-        } catch (error) {
-            console.log("error :>> ", error);
-        }
+    const deleteTestResult = async (testId) => {
+        await testInstance.delete(`/testResults/${testId}`);
     };
+
+    const deleteMutation = useMutation({
+        mutationFn: deleteTestResult,
+        onSuccess: () => queryClient.invalidateQueries(["MBTIS"]),
+        onError: (error) => console.log("error :>> ", error),
+    });
+
+    const handleDelete = (testId) => {
+        deleteMutation.mutate(testId);
+    };
+
+    if (userMBTIsLoading) return <div>Loading...</div>;
+    if (userMBTIsError) return <div>에러 발생!</div>;
 
     return (
         <div>
@@ -61,19 +71,20 @@ const TestResult = () => {
             {userMBTIs?.map((mbti, idx) => {
                 return (
                     <div key={`${mbti.id}`}>
-                        <h1>{mbti.result}</h1>
-                        <h3>{mbti.userId}</h3>
-                        <p>{MBTIDESC[mbti.result]}</p>
+                        <h1>결과: {mbti.result}</h1>
+                        <h3>유저아이디: {mbti.userId}</h3>
+                        <h3>닉네임: {mbti.nickname}</h3>
+                        <p>상세설명: {MBTIDESC[mbti.result]}</p>
                         {mbti.userId == userId ? (
                             <div>
                                 <button
-                                    onClick={() => toggleTestData(mbti.id, mbti)}
+                                    onClick={() => handleToggle(mbti)}
                                     className="border-solid border-red-400 border-2"
                                 >
                                     {mbti.visibility ? "비공개" : "공개"}
                                 </button>
                                 <button
-                                    onClick={() => deleteTestData(mbti.id)}
+                                    onClick={() => handleDelete(mbti.id)}
                                     className="border-solid border-blue-400 border-2"
                                 >
                                     삭제

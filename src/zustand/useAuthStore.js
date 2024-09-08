@@ -6,7 +6,6 @@ const useAuthStore = create(
     persist(
         (set) => ({
             userInfo: {
-                accessToken: null,
                 avatar: "",
                 nickname: null,
                 userId: null,
@@ -15,7 +14,6 @@ const useAuthStore = create(
             login: (userObj) =>
                 set(() => ({
                     userInfo: {
-                        accessToken: userObj.accessToken,
                         avatar: userObj.avatar ? userObj.avatar : "",
                         nickname: userObj.nickname,
                         userId: userObj.userId,
@@ -25,7 +23,6 @@ const useAuthStore = create(
             logout: () =>
                 set(() => ({
                     userInfo: {
-                        accessToken: null,
                         avatar: "",
                         nickname: null,
                         userId: null,
@@ -43,8 +40,8 @@ const useAuthStore = create(
                 })),
         }),
         {
-            name: "user-storage", // name of the item in the storage (must be unique)
-            storage: createJSONStorage(() => localStorage), // (optional) by default, 'localStorage' is used
+            name: "user-storage",
+            storage: createJSONStorage(() => localStorage),
         }
     )
 );

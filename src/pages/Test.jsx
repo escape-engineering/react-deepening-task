@@ -2,10 +2,10 @@ import { questions } from "../data/questions";
 import TestItem from "../components/testpage/TestItem";
 import { useState } from "react";
 import { calculateMBTI } from "../utils/mbtiCalculator";
-import { postMyTestResult, testInstance } from "../apis/testApi";
+import { testInstance } from "../apis/testApi";
 import { useUserInfo } from "../zustand/useAuthStore";
 import { useNavigate } from "react-router-dom";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 
 const Test = () => {
     const [answers, setAnswers] = useState(Array.from({ length: questions.length }));
@@ -26,12 +26,12 @@ const Test = () => {
         return result;
     };
 
-    const postMyTestResultByTanstack = async (resultObj) => {
+    const postMyTestResult = async (resultObj) => {
         await testInstance.post(`/testResults`, resultObj);
     };
 
     const { mutate } = useMutation({
-        mutationFn: postMyTestResultByTanstack,
+        mutationFn: postMyTestResult,
         onSuccess: (data) => navigate("/testresult", { state: data }),
         onError: (error) => console.log("error :>> ", error),
     });

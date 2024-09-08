@@ -1,7 +1,6 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { MBTIDESC } from "../constants";
-import { deleteTestResult, getTargetTestResults, testInstance, toggleTestResult } from "../apis/testApi";
-import { useEffect, useState } from "react";
+import { deleteTestResult, getAllTestResults, toggleTestResult } from "../apis/testApi";
 import { useUserInfo } from "../zustand/useAuthStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
@@ -9,26 +8,18 @@ const TestResult = () => {
     const location = useLocation();
     const testedMbti = location?.state;
     const { userId } = useUserInfo();
+    const navigate = useNavigate();
     const queryClient = useQueryClient();
-
-    const getAllTestResults = async () => {
-        const response = await testInstance.get("/testResults");
-        const filteredData = response.data.filter((el) => el.userId == userId || el.visibility);
-        return filteredData;
-    };
 
     const {
         data: userMBTIs,
         isLoading: userMBTIsLoading,
         isError: userMBTIsError,
+        refetch,
     } = useQuery({
         queryKey: ["MBTIS"],
-        queryFn: getAllTestResults,
+        queryFn: () => getAllTestResults(userId),
     });
-
-    const toggleTestResult = async (testObj) => {
-        await testInstance.patch(`/testResults/${testObj.id}`, testObj);
-    };
 
     const toggleMutation = useMutation({
         mutationFn: toggleTestResult,
@@ -39,10 +30,6 @@ const TestResult = () => {
     const handleToggle = (testObj) => {
         const newTestObj = { ...testObj, visibility: !testObj.visibility };
         toggleMutation.mutate(newTestObj);
-    };
-
-    const deleteTestResult = async (testId) => {
-        await testInstance.delete(`/testResults/${testId}`);
     };
 
     const deleteMutation = useMutation({
@@ -56,7 +43,16 @@ const TestResult = () => {
     };
 
     if (userMBTIsLoading) return <div>Loading...</div>;
-    if (userMBTIsError) return <div>에러 발생!</div>;
+    if (userMBTIsError)
+        return (
+            <div>
+                <p>서버가 아파요 ㅠㅠ</p>
+                <div>
+                    <button onClick={() => refetch()}>서버 연결 재시도</button>
+                    <button onClick={() => navigate("/")}>홈으로 돌아가기</button>
+                </div>
+            </div>
+        );
 
     return (
         <div>
@@ -68,7 +64,7 @@ const TestResult = () => {
             ) : (
                 <></>
             )}
-            {userMBTIs?.map((mbti, idx) => {
+            {userMBTIs?.map((mbti) => {
                 return (
                     <div key={`${mbti.id}`}>
                         <h1>결과: {mbti.result}</h1>

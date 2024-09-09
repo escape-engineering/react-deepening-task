@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import useInput from "../hooks/useInput";
 import { handleSignup } from "../apis/authApi";
 import { useNavigate } from "react-router-dom";
@@ -11,8 +10,17 @@ const Signup = () => {
     const [userPasswordCheck, handleUserPasswordCheck] = useInput();
 
     const isPasswordsEqual = userPassword === userPasswordCheck;
-
-    const isReadyToRegister = userId && userPassword && userNickname && userPasswordCheck && isPasswordsEqual;
+    const isStringLengthOverFour = (str) => {
+        return str.length >= 4 ? true : false;
+    };
+    const isReadyToRegister =
+        userId &&
+        userPassword &&
+        userNickname &&
+        userPasswordCheck &&
+        isPasswordsEqual &&
+        isStringLengthOverFour(userId) &&
+        isStringLengthOverFour(userPassword);
 
     const handleOnSubmit = async (e) => {
         e.preventDefault();
@@ -29,31 +37,39 @@ const Signup = () => {
     };
 
     return (
-        <form className="flex flex-col justify-center" onSubmit={handleOnSubmit}>
+        <form className="flex flex-col justify-center items-center gap-1" onSubmit={handleOnSubmit}>
             <input
-                className="border-solid border-black border-2 w-64"
+                className="border-solid border-gray-300 border-2 w-96 h-16 rounded-3xl indent-5"
                 type="text"
                 placeholder="아이디를 입력해주세요"
                 value={userId}
                 onChange={handleUserId}
             />
-            <p className="border-solid border-black border-2 w-64 h-7"></p>
+            <p className="w-80 h-7 text-red-600">
+                {userId.length ? (isStringLengthOverFour(userId) ? "" : "아이디는 4글자 이상이어야합니다!") : null}
+            </p>
             <input
-                className="border-solid border-black border-2 w-64"
+                className="border-solid border-gray-300 border-2 w-96 h-16 rounded-3xl indent-5"
                 type="password"
                 placeholder="비밀번호를 입력해주세요"
                 value={userPassword}
                 onChange={handleUserPassword}
             />
-            <p className="border-solid border-black border-2 w-64 h-7"></p>
+            <p className="w-80 h-7 text-red-600">
+                {userPassword
+                    ? isStringLengthOverFour(userPassword)
+                        ? ""
+                        : "비밀번호는 4글자 이상이어야합니다!"
+                    : null}
+            </p>
             <input
-                className="border-solid border-black border-2 w-64"
+                className="border-solid border-gray-300 border-2 w-96 h-16 rounded-3xl indent-5"
                 type="password"
                 placeholder="비밀번호를 확인해주세요"
                 value={userPasswordCheck}
                 onChange={handleUserPasswordCheck}
             />
-            <p className="border-solid border-black border-2 w-64 h-7 text-red-600">
+            <p className={`w-80 h-7  ${isPasswordsEqual ? "text-green-500" : "text-red-600"}`}>
                 {userPassword && userPasswordCheck
                     ? isPasswordsEqual
                         ? "비밀번호가 일치합니다!"
@@ -61,14 +77,19 @@ const Signup = () => {
                     : ""}
             </p>
             <input
-                className="border-solid border-black border-2 w-64"
+                className="border-solid border-gray-300 border-2 w-96 h-16 rounded-3xl indent-5"
                 type="text"
                 placeholder="닉네임을 입력해주세요"
                 value={userNickname}
                 onChange={handleUserNickname}
             />
-            <p className="border-solid border-black border-2 w-64 h-7"></p>
-            <button type="form" disabled={!isReadyToRegister} className="border-solid border-black border-2 w-40 h-7">
+            <button
+                type="form"
+                disabled={!isReadyToRegister}
+                className={`border-${
+                    isReadyToRegister ? "solid" : "dashed"
+                } border-gray-400 border-2 rounded-xl w-40 h-7 ${isReadyToRegister ? "hover:bg-gray-300" : ""}`}
+            >
                 회원가입
             </button>
         </form>

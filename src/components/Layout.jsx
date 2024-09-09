@@ -1,6 +1,5 @@
-import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useIsLogin, useLogout, useUserInfo } from "../zustand/useAuthStore";
+import { useIsLogin, useLogout } from "../zustand/useAuthStore";
 
 const Layout = ({ children }) => {
     const navigate = useNavigate();
@@ -14,7 +13,6 @@ const Layout = ({ children }) => {
         alert("로그아웃되었습니다! 홈페이지로 이동합니다.");
         navigate("/");
     };
-    useEffect(() => {}, []);
     return (
         <div>
             <header>
@@ -42,13 +40,13 @@ const Layout = ({ children }) => {
                         ) : (
                             <>
                                 <Link
-                                    className="px-2 w-20 text-center content-center rounded-2xl hover:bg-slate-400"
+                                    className="px-2 text-center content-center rounded-2xl hover:bg-slate-400"
                                     to="/login"
                                 >
                                     로그인
                                 </Link>
                                 <Link
-                                    className="px-2 w-20 text-center content-center rounded-2xl hover:bg-slate-400"
+                                    className="px-2 text-center content-center rounded-2xl hover:bg-slate-400"
                                     to="/signup"
                                 >
                                     회원가입

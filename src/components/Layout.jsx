@@ -17,25 +17,40 @@ const Layout = ({ children }) => {
     useEffect(() => {}, []);
     return (
         <div>
-            <header className="border-solid border-red-400 border-2">
-                <nav className="flex justify-between">
-                    <Link className="border-solid border-black border-2" to="/">
+            <header>
+                <nav className="mx-10 px-5 flex flex-row justify-between h-16 bg-gray-300">
+                    <Link className="px-2 text-center content-center rounded-2xl hover:bg-slate-400" to="/">
                         홈
                     </Link>
+                    <h1 className="text-4xl font-bold text-center content-center">MBTI 테스트</h1>
                     <div className="flex gap-2">
                         {isLogin ? (
                             <>
-                                <button onClick={handleLogout}>로그아웃</button>
-                                <Link className="border-solid border-black border-2" to="/profile">
+                                <button
+                                    className="px-2 text-center content-center rounded-2xl hover:bg-slate-400"
+                                    onClick={handleLogout}
+                                >
+                                    로그아웃
+                                </button>
+                                <Link
+                                    className="px-2 text-center content-center rounded-2xl hover:bg-slate-400"
+                                    to="/profile"
+                                >
                                     마이페이지
                                 </Link>
                             </>
                         ) : (
                             <>
-                                <Link className="border-solid border-black border-2" to="/login">
+                                <Link
+                                    className="px-2 w-20 text-center content-center rounded-2xl hover:bg-slate-400"
+                                    to="/login"
+                                >
                                     로그인
                                 </Link>
-                                <Link className="border-solid border-black border-2" to="/signup">
+                                <Link
+                                    className="px-2 w-20 text-center content-center rounded-2xl hover:bg-slate-400"
+                                    to="/signup"
+                                >
                                     회원가입
                                 </Link>
                             </>

@@ -1,5 +1,4 @@
 import axios from "axios";
-const userAccessToken = localStorage.getItem("accessToken");
 
 const authInstance = axios.create({
     baseURL: "https://moneyfulpublicpolicy.co.kr",
@@ -17,7 +16,13 @@ export const handleLogin = async (userObj) => {
 
 const userInstance = axios.create({
     baseURL: "https://moneyfulpublicpolicy.co.kr",
-    headers: { "Authorization": `Bearer ${userAccessToken}` },
+});
+userInstance.interceptors.request.use((config) => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (config.headers && accessToken) {
+        config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+    return config;
 });
 
 export const getUserData = async () => {
@@ -28,10 +33,18 @@ export const getUserData = async () => {
 const updateUserInstance = axios.create({
     baseURL: "https://moneyfulpublicpolicy.co.kr",
     headers: {
-        "Authorization": `Bearer ${userAccessToken}`,
         "Contene-Type": "multipart/form-data",
     },
 });
+
+updateUserInstance.interceptors.request.use((config) => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (config.headers && accessToken) {
+        config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+    return config;
+});
+
 export const updateUserData = async (formData) => {
     const response = await updateUserInstance.patch("/profile", formData);
     return response.data;

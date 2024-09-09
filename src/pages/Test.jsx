@@ -39,12 +39,17 @@ const Test = () => {
     return (
         <form onSubmit={(e) => handleSubmit(e)}>
             <ul>
-                {targetQuestions.queList.map((test) => {
-                    return <TestItem key={test.id} test={test} handleAnswers={handleAnswers} />;
+                {targetQuestions.queList.map((test, idx) => {
+                    return <TestItem key={test.id} test={test} idx={idx + 1} handleAnswers={handleAnswers} />;
                 })}
             </ul>
-            <div>
-                <button type="form">제출</button>
+            <div className="flex justify-center items-center">
+                <button
+                    type="form"
+                    className="m-5 border-solid border-gray-400 border-2 rounded-xl w-40 h-10 hover:bg-gray-300"
+                >
+                    제출
+                </button>
             </div>
         </form>
     );

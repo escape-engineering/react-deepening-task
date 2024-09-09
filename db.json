@@ -20,6 +20,13 @@
       "userId": "test1331212334",
       "result": "ISTJ",
       "visibility": false
+    },
+    {
+      "id": "c215",
+      "nickname": "test13312123",
+      "userId": "test13312123",
+      "result": "INFJ",
+      "visibility": false
     }
   ],
   "mbti_test_coding": [
@@ -43,6 +50,13 @@
       "userId": "test1331212334",
       "result": "INFJ",
       "visibility": true
+    },
+    {
+      "id": "84ac",
+      "nickname": "test13312123",
+      "userId": "test13312123",
+      "result": "INFP",
+      "visibility": false
     }
   ]
 }

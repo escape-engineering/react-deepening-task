@@ -1,21 +1,19 @@
-import React from "react";
+import TestItemRadio from "./TestItemRadio";
 
-const TestItem = ({ test, handleAnswers }) => {
+const TestItem = ({ test, handleAnswers, idx }) => {
     return (
-        <li className="my-4">
-            <p>{test.question}</p>
-            <fieldset>
+        <li className="my-4 flex flex-col gap-2">
+            <p>{`${idx}. ${test.question}`}</p>
+            <fieldset className="flex flex-row justify-start gap-4">
                 {test.options.map((option, idx) => {
                     return (
-                        <div key={`question-${idx}-${test.id}`}>
-                            <input
-                                type="radio"
-                                name={`${test.id}`}
-                                id={`${test.id}-${idx}`}
-                                onChange={() => handleAnswers(test.id - 1, option)}
-                            />
-                            <label htmlFor={`${test.id}-${idx}`}>{option}</label>
-                        </div>
+                        <TestItemRadio
+                            key={`question-${idx}-${test.id}`}
+                            idx={idx}
+                            test={test}
+                            handleAnswers={handleAnswers}
+                            option={option}
+                        />
                     );
                 })}
             </fieldset>

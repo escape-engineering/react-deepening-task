@@ -7,7 +7,7 @@ export const usePostMyTestMutation = (testid) => {
     const navigate = useNavigate();
     return useMutation({
         mutationFn: postMyTestResult,
-        onSuccess: (data) => navigate(`/testresult/${testid}`, { state: data }),
+        onSuccess: () => navigate(`/testresult/${testid}`),
         onError: (error) => console.log("error :>> ", error),
     });
 };

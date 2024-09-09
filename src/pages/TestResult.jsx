@@ -1,13 +1,10 @@
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { MBTIDESC } from "../constants";
 import { useUserInfo } from "../zustand/useAuthStore";
 import { useDeleteDataMutation, useGetAllResultQuery, useToggleVisibilityMutation } from "../queries/useCustomQuery";
 
 const TestResult = () => {
     const { testid } = useParams();
-    console.log("testid :>> ", testid);
-    const location = useLocation();
-    const testedMbti = location?.state;
     const { userId } = useUserInfo();
     const navigate = useNavigate();
 
@@ -45,14 +42,6 @@ const TestResult = () => {
 
     return (
         <div>
-            {testedMbti ? (
-                <div>
-                    <h1>{testedMbti}</h1>
-                    <p>{MBTIDESC[testid][testedMbti]}</p>
-                </div>
-            ) : (
-                <></>
-            )}
             {userMBTIs?.map((mbti) => {
                 return (
                     <div key={`${mbti.id}`}>

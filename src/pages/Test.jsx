@@ -2,23 +2,23 @@ import { questions } from "../data/questions";
 import TestItem from "../components/testpage/TestItem";
 import { useState } from "react";
 import { calculateMBTI } from "../utils/mbtiCalculator";
-import { testInstance } from "../apis/testApi";
 import { useUserInfo } from "../zustand/useAuthStore";
-import { useNavigate, useParams } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
+import { useParams } from "react-router-dom";
+import { usePostMyTestMutation } from "../queries/useCustomQuery";
 
 const Test = () => {
     const { testid } = useParams();
+    console.log("testid :>> ", testid);
     const targetQuestions = questions[testid];
-    const [answers, setAnswers] = useState(Array.from({ length: targetQuestions.length }));
-    const navigate = useNavigate();
     const { userId, nickname } = useUserInfo();
+    const { mutate } = usePostMyTestMutation(targetQuestions.testTitle);
+    const [answers, setAnswers] = useState(Array.from({ length: targetQuestions.queList.length }));
 
     const handleAnswers = (idx, selected) => {
         setAnswers([...answers].with(idx, selected));
     };
 
-    const getMBTIResult = async () => {
+    const transformResult = async () => {
         const isAnswersSelected = answers.every((answer) => answer != undefined);
         if (!isAnswersSelected) {
             alert("모든 문항에 답을 해주세요!");
@@ -28,29 +28,19 @@ const Test = () => {
         return result;
     };
 
-    const postMyTestResult = async (resultObj) => {
-        await testInstance.post(`/${testid}`, resultObj);
-    };
-
-    const { mutate } = useMutation({
-        mutationFn: postMyTestResult,
-        onSuccess: (data) => navigate(`/testresult/${testid}`, { state: data }),
-        onError: (error) => console.log("error :>> ", error),
-    });
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const result = await getMBTIResult();
+        const result = await transformResult();
         const resultObj = { nickname, userId, result, visibility: false };
         if (result) {
-            mutate(resultObj);
+            mutate({ testTitle: targetQuestions.testTitle, resultObj });
         }
     };
 
     return (
         <form onSubmit={(e) => handleSubmit(e)}>
             <ul>
-                {targetQuestions.map((test) => {
+                {targetQuestions.queList.map((test) => {
                     return <TestItem key={test.id} test={test} handleAnswers={handleAnswers} />;
                 })}
             </ul>

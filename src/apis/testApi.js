@@ -4,6 +4,10 @@ export const testInstance = axios.create({
     baseURL: "http://localhost:5000",
 });
 
+export const postMyTestResult = async ({ testTitle, resultObj }) => {
+    await testInstance.post(`/${testTitle}`, resultObj);
+};
+
 export const getAllTestResults = async (testid, userId) => {
     const response = await testInstance.get(`/${testid}`);
     const filteredData = response.data.filter((el) => el.userId == userId || el.visibility);

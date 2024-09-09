@@ -1,43 +1,31 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { MBTIDESC } from "../constants";
-import { deleteTestResult, getAllTestResults, toggleTestResult } from "../apis/testApi";
 import { useUserInfo } from "../zustand/useAuthStore";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useDeleteDataMutation, useGetAllResultQuery, useToggleVisibilityMutation } from "../queries/useCustomQuery";
 
 const TestResult = () => {
     const { testid } = useParams();
+    console.log("testid :>> ", testid);
     const location = useLocation();
     const testedMbti = location?.state;
     const { userId } = useUserInfo();
     const navigate = useNavigate();
-    const queryClient = useQueryClient();
 
     const {
         data: userMBTIs,
         isLoading: userMBTIsLoading,
         isError: userMBTIsError,
         refetch,
-    } = useQuery({
-        queryKey: ["MBTIS"],
-        queryFn: () => getAllTestResults(testid, userId),
-    });
+    } = useGetAllResultQuery(testid, userId);
 
-    const toggleMutation = useMutation({
-        mutationFn: toggleTestResult,
-        onSuccess: () => queryClient.invalidateQueries(["MBTIS"]),
-        onError: (error) => console.log("error :>> ", error),
-    });
+    const toggleMutation = useToggleVisibilityMutation();
 
     const handleToggle = (testObj) => {
         const newTestObj = { ...testObj, visibility: !testObj.visibility };
         toggleMutation.mutate({ testid: testid, testResultObj: newTestObj });
     };
 
-    const deleteMutation = useMutation({
-        mutationFn: deleteTestResult,
-        onSuccess: () => queryClient.invalidateQueries(["MBTIS"]),
-        onError: (error) => console.log("error :>> ", error),
-    });
+    const deleteMutation = useDeleteDataMutation();
 
     const handleDelete = (testResultId) => {
         deleteMutation.mutate({ testid: testid, testResultId: testResultId });
@@ -60,7 +48,7 @@ const TestResult = () => {
             {testedMbti ? (
                 <div>
                     <h1>{testedMbti}</h1>
-                    <p>{MBTIDESC[testedMbti]}</p>
+                    <p>{MBTIDESC[testid][testedMbti]}</p>
                 </div>
             ) : (
                 <></>
@@ -71,7 +59,7 @@ const TestResult = () => {
                         <h1>결과: {mbti.result}</h1>
                         <h3>유저아이디: {mbti.userId}</h3>
                         <h3>닉네임: {mbti.nickname}</h3>
-                        <p>상세설명: {MBTIDESC[mbti.result]}</p>
+                        <p>상세설명: {MBTIDESC[testid][mbti.result]}</p>
                         {mbti.userId == userId ? (
                             <div>
                                 <button

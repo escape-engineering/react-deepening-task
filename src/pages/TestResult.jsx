@@ -1,10 +1,11 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { MBTIDESC } from "../constants";
 import { deleteTestResult, getAllTestResults, toggleTestResult } from "../apis/testApi";
 import { useUserInfo } from "../zustand/useAuthStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 const TestResult = () => {
+    const { testid } = useParams();
     const location = useLocation();
     const testedMbti = location?.state;
     const { userId } = useUserInfo();
@@ -18,7 +19,7 @@ const TestResult = () => {
         refetch,
     } = useQuery({
         queryKey: ["MBTIS"],
-        queryFn: () => getAllTestResults(userId),
+        queryFn: () => getAllTestResults(testid, userId),
     });
 
     const toggleMutation = useMutation({
@@ -29,7 +30,7 @@ const TestResult = () => {
 
     const handleToggle = (testObj) => {
         const newTestObj = { ...testObj, visibility: !testObj.visibility };
-        toggleMutation.mutate(newTestObj);
+        toggleMutation.mutate({ testid: testid, testResultObj: newTestObj });
     };
 
     const deleteMutation = useMutation({
@@ -38,8 +39,8 @@ const TestResult = () => {
         onError: (error) => console.log("error :>> ", error),
     });
 
-    const handleDelete = (testId) => {
-        deleteMutation.mutate(testId);
+    const handleDelete = (testResultId) => {
+        deleteMutation.mutate({ testid: testid, testResultId: testResultId });
     };
 
     if (userMBTIsLoading) return <div>Loading...</div>;

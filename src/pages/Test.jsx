@@ -4,11 +4,13 @@ import { useState } from "react";
 import { calculateMBTI } from "../utils/mbtiCalculator";
 import { testInstance } from "../apis/testApi";
 import { useUserInfo } from "../zustand/useAuthStore";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 
 const Test = () => {
-    const [answers, setAnswers] = useState(Array.from({ length: questions.length }));
+    const { testid } = useParams();
+    const targetQuestions = questions[testid];
+    const [answers, setAnswers] = useState(Array.from({ length: targetQuestions.length }));
     const navigate = useNavigate();
     const { userId, nickname } = useUserInfo();
 
@@ -22,17 +24,17 @@ const Test = () => {
             alert("모든 문항에 답을 해주세요!");
             return;
         }
-        const result = calculateMBTI(answers);
+        const result = calculateMBTI(testid, answers);
         return result;
     };
 
     const postMyTestResult = async (resultObj) => {
-        await testInstance.post(`/testResults`, resultObj);
+        await testInstance.post(`/${testid}`, resultObj);
     };
 
     const { mutate } = useMutation({
         mutationFn: postMyTestResult,
-        onSuccess: (data) => navigate("/testresult", { state: data }),
+        onSuccess: (data) => navigate(`/testresult/${testid}`, { state: data }),
         onError: (error) => console.log("error :>> ", error),
     });
 
@@ -48,7 +50,7 @@ const Test = () => {
     return (
         <form onSubmit={(e) => handleSubmit(e)}>
             <ul>
-                {questions.map((test) => {
+                {targetQuestions.map((test) => {
                     return <TestItem key={test.id} test={test} handleAnswers={handleAnswers} />;
                 })}
             </ul>

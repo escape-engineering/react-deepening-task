@@ -1,5 +1,5 @@
 {
-  "testResults": [
+  "1": [
     {
       "id": "1421",
       "nickname": "test133121233",
@@ -8,11 +8,35 @@
       "visibility": true
     },
     {
-      "id": "e053",
+      "id": "f190",
       "nickname": "test1331212334",
       "userId": "test1331212334",
-      "result": "ENFJ",
-      "visibility": true
+      "result": "ENTJ",
+      "visibility": false
+    },
+    {
+      "id": "a3dd",
+      "nickname": "test1331212334",
+      "userId": "test1331212334",
+      "result": "ENTP",
+      "visibility": false
+    },
+    {
+      "id": "cba3",
+      "nickname": "test1331212334",
+      "userId": "test1331212334",
+      "result": "ENTJ",
+      "visibility": false
     }
-  ]
+  ],
+  "2": [
+    {
+      "id": "3772",
+      "nickname": "test1331212334",
+      "userId": "test1331212334",
+      "result": "ESFP",
+      "visibility": false
+    }
+  ],
+  "3": []
 }

@@ -1,6 +1,6 @@
 import { questions } from "../data/questions";
 
-export const calculateMBTI = (answers) => {
+export const calculateMBTI = (testId, answers) => {
     const scores = {
         E: 0,
         I: 0,
@@ -13,7 +13,7 @@ export const calculateMBTI = (answers) => {
     };
 
     answers.forEach((answer, index) => {
-        const question = questions[index];
+        const question = questions[testId][index];
         if (question.type === "E/I") {
             scores[answer === "예" ? "E" : "I"]++;
         } else if (question.type === "S/N") {

@@ -8,7 +8,6 @@ import { usePostMyTestMutation } from "../queries/useCustomQuery";
 
 const Test = () => {
     const { testid } = useParams();
-    console.log("testid :>> ", testid);
     const targetQuestions = questions[testid];
     const { userId, nickname } = useUserInfo();
     const { mutate } = usePostMyTestMutation(targetQuestions.testTitle);

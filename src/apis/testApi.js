@@ -4,6 +4,16 @@ export const testInstance = axios.create({
     baseURL: "http://localhost:5000",
 });
 
+testInstance.interceptors.response.use(
+    (response) => {
+        return response;
+    },
+    (error) => {
+        alert("서버연결에 실패했습니다!  잠시후 재시도해주세요!");
+        return Promise.reject(error);
+    }
+);
+
 export const postMyTestResult = async ({ testTitle, resultObj }) => {
     await testInstance.post(`/${testTitle}`, resultObj);
 };

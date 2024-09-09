@@ -1,34 +1,48 @@
 {
-    "mbti_test": [
-        {
-            "id": "caea",
-            "nickname": "test1331212334",
-            "userId": "test1331212334",
-            "result": "ESTJ",
-            "visibility": true
-        },
-        {
-            "id": "6315",
-            "nickname": "test1331212334",
-            "userId": "test1331212334",
-            "result": "ENFP",
-            "visibility": false
-        },
-        {
-            "id": "ef47",
-            "nickname": "test1331212334",
-            "userId": "test1331212334",
-            "result": "ISTJ",
-            "visibility": false
-        }
-    ],
-    "mbti_test_coding": [
-        {
-            "id": "4b4d",
-            "nickname": "test1331212334",
-            "userId": "test1331212334",
-            "result": "ISFJ",
-            "visibility": true
-        }
-    ]
+  "mbti_test": [
+    {
+      "id": "caea",
+      "nickname": "test1331212334",
+      "userId": "test1331212334",
+      "result": "ESTJ",
+      "visibility": true
+    },
+    {
+      "id": "6315",
+      "nickname": "test1331212334",
+      "userId": "test1331212334",
+      "result": "ENFP",
+      "visibility": false
+    },
+    {
+      "id": "ef47",
+      "nickname": "test1331212334",
+      "userId": "test1331212334",
+      "result": "ISTJ",
+      "visibility": false
+    }
+  ],
+  "mbti_test_coding": [
+    {
+      "id": "4b4d",
+      "nickname": "test1331212334",
+      "userId": "test1331212334",
+      "result": "ISFJ",
+      "visibility": true
+    },
+    {
+      "id": "71f9",
+      "nickname": "test1331212334",
+      "userId": "test1331212334",
+      "result": "INFP",
+      "visibility": false
+    },
+    {
+      "id": "9605",
+      "nickname": "test1331212334",
+      "userId": "test1331212334",
+      "result": "INFJ",
+      "visibility": true
+    }
+  ]
 }

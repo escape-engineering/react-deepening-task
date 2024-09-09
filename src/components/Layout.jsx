@@ -16,7 +16,7 @@ const Layout = ({ children }) => {
     return (
         <div>
             <header>
-                <nav className="mx-10 px-5 flex flex-row justify-between h-16 bg-gray-300">
+                <nav className="mx-10 px-5 flex flex-row justify-between h-16 bg-gray-300 rounded-b-3xl">
                     <Link className="px-2 text-center content-center rounded-2xl hover:bg-slate-400" to="/">
                         홈
                     </Link>

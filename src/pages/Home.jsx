@@ -4,27 +4,25 @@ import { questions } from "../data/questions";
 const Home = () => {
     const navigate = useNavigate();
     return (
-        <div className="border-solid border-red-400 border-2">
-            <h1>너는 뭐가 문제인거니?</h1>
+        <div className="rounded-3xl bg-blue-100 p-3 flex flex-row flex-wrap gap-10 justify-center items-center">
+            <h1 className="text-3xl font-bold pt-2 pb-4 border-solid  border-gray-400 border-b-2 w-11/12 text-center content-center py-4 ">
+                간단한 테스트로 내 성격 알아보기
+            </h1>
             <ul className="flex flex-row gap-5">
                 {questions.map((test, idx) => {
                     return (
                         <li
                             key={`${test.testTitle}-${idx}`}
-                            className="border-solid border-black border-2"
+                            className="border-solid border-black border-2 bg-white p-2 rounded-xl cursor-pointer hover:bg-slate-200"
                             onClick={() => navigate(`/test/${idx}`)}
                         >
-                            <h2>{test.testTitleKR}</h2>
-                            <h3>{test.testDesc}</h3>
+                            <h2 className="text-center content-center text-xl pb-2 border-solid  border-gray-400 border-b-2">
+                                {test.testTitleKR}
+                            </h2>
+                            <h3 className="text-center content-center text-lg">{test.testDesc}</h3>
                         </li>
                     );
                 })}
-                {/* <li className="border-solid border-black border-2" onClick={() => navigate("/test/1")}>
-                    MBTI 테스트
-                </li>
-                <li className="border-solid border-black border-2" onClick={() => navigate("/test/2")}>
-                    코딩 성향 테스트
-                </li> */}
             </ul>
         </div>
     );

@@ -1,32 +1,18 @@
-import { useNavigate, useParams } from "react-router-dom";
 import { MBTIDESC } from "../constants";
-import { useUserInfo } from "../zustand/useAuthStore";
-import { useDeleteDataMutation, useGetAllResultQuery, useToggleVisibilityMutation } from "../queries/useCustomQuery";
+import useTestResultPage from "../hooks/useTestResultPage";
 
 const TestResult = () => {
-    const { testid } = useParams();
-    const { userId } = useUserInfo();
-    const navigate = useNavigate();
-
     const {
-        data: userMBTIs,
-        isLoading: userMBTIsLoading,
-        isError: userMBTIsError,
+        userMBTIsLoading,
+        userMBTIsError,
         refetch,
-    } = useGetAllResultQuery(testid, userId);
-
-    const toggleMutation = useToggleVisibilityMutation();
-
-    const handleToggle = (testObj) => {
-        const newTestObj = { ...testObj, visibility: !testObj.visibility };
-        toggleMutation.mutate({ testid: testid, testResultObj: newTestObj });
-    };
-
-    const deleteMutation = useDeleteDataMutation();
-
-    const handleDelete = (testResultId) => {
-        deleteMutation.mutate({ testid: testid, testResultId: testResultId });
-    };
+        goToHome,
+        userMBTIs,
+        userId,
+        handleToggle,
+        testid,
+        handleDelete,
+    } = useTestResultPage();
 
     if (userMBTIsLoading) return <div>Loading...</div>;
     if (userMBTIsError)
@@ -35,7 +21,7 @@ const TestResult = () => {
                 <p>서버가 아파요 ㅠㅠ</p>
                 <div>
                     <button onClick={() => refetch()}>서버 연결 재시도</button>
-                    <button onClick={() => navigate("/")}>홈으로 돌아가기</button>
+                    <button onClick={goToHome}>홈으로 돌아가기</button>
                 </div>
             </div>
         );

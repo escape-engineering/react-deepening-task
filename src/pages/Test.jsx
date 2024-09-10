@@ -1,43 +1,13 @@
-import { questions } from "../data/questions";
 import TestItem from "../components/testpage/TestItem";
-import { useState } from "react";
-import { calculateMBTI } from "../utils/mbtiCalculator";
 import { useUserInfo } from "../zustand/useAuthStore";
-import { useParams } from "react-router-dom";
-import { usePostMyTestMutation } from "../queries/useCustomQuery";
+import useTestPage from "../hooks/useTestPage";
 
 const Test = () => {
-    const { testid } = useParams();
-    const targetQuestions = questions[testid];
     const { userId, nickname } = useUserInfo();
-    const { mutate } = usePostMyTestMutation(targetQuestions.testTitle);
-    const [answers, setAnswers] = useState(Array.from({ length: targetQuestions.queList.length }));
-
-    const handleAnswers = (idx, selected) => {
-        setAnswers([...answers].with(idx, selected));
-    };
-
-    const transformResult = async () => {
-        const isAnswersSelected = answers.every((answer) => answer != undefined);
-        if (!isAnswersSelected) {
-            alert("모든 문항에 답을 해주세요!");
-            return;
-        }
-        const result = calculateMBTI(testid, answers);
-        return result;
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const result = await transformResult();
-        const resultObj = { nickname, userId, result, visibility: false };
-        if (result) {
-            mutate({ testTitle: targetQuestions.testTitle, resultObj });
-        }
-    };
+    const { handleSubmit, targetQuestions, handleAnswers } = useTestPage();
 
     return (
-        <form onSubmit={(e) => handleSubmit(e)}>
+        <form onSubmit={(e) => handleSubmit(e, nickname, userId)}>
             <ul>
                 {targetQuestions.queList.map((test, idx) => {
                     return <TestItem key={test.id} test={test} idx={idx + 1} handleAnswers={handleAnswers} />;

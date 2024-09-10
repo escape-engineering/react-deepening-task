@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getUserData, updateUserData } from "../apis/authApi";
-import { useLogin, useLogout, useUpdateUserInfo, useUserInfo } from "../zustand/useAuthStore";
+import { useLogout, useUpdateUserInfo, useUserInfo } from "../zustand/useAuthStore";
 import { useNavigate } from "react-router-dom";
 import defaultProfile from "../asset/defaultProfile.png";
 import useInput from "../hooks/useInput";

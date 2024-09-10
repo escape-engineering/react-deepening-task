@@ -7,8 +7,8 @@ const TestResultItem = ({ mbti }) => {
     return (
         <div className="border-solid border-[#644d21] border-8  rounded-[20px] bg-[#4A655A] flex flex-col w-[600px] p-5">
             <h1 className="text-white font-[600]">결과: {mbti.result}</h1>
-            <h3 className="text-white font-[600]">유저아이디: {mbti.userId}</h3>
-            <h3 className="text-white font-[600]">닉네임: {mbti.nickname}</h3>
+            <h3 className="text-white font-[600] w-[250px] truncate">유저아이디: {mbti.userId}</h3>
+            <h3 className="text-white font-[600] w-[250px] truncate">닉네임: {mbti.nickname}</h3>
             <p className="text-white font-[600]">상세설명: {MBTIDESC[testid][mbti.result]}</p>
             {mbti.userId == userId ? (
                 <div className="flex flex-row justify-end gap-3">

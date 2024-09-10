@@ -1,4 +1,3 @@
-import React from "react";
 import useInput from "../hooks/useInput";
 import useLoginPage from "../hooks/useLoginPage";
 

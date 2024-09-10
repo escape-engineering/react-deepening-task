@@ -1,7 +1,9 @@
 import axios from "axios";
 
+const USERDATA_SERVER_URL = import.meta.env.VITE_USERDATA_SERVER_URL;
+
 const authInstance = axios.create({
-    baseURL: "https://moneyfulpublicpolicy.co.kr",
+    baseURL: USERDATA_SERVER_URL,
 });
 
 export const handleSignup = async (userObj) => {
@@ -15,7 +17,7 @@ export const handleLogin = async (userObj) => {
 };
 
 const userInstance = axios.create({
-    baseURL: "https://moneyfulpublicpolicy.co.kr",
+    baseURL: USERDATA_SERVER_URL,
 });
 userInstance.interceptors.request.use((config) => {
     const accessToken = localStorage.getItem("accessToken");
@@ -31,7 +33,7 @@ export const getUserData = async () => {
 };
 
 const updateUserInstance = axios.create({
-    baseURL: "https://moneyfulpublicpolicy.co.kr",
+    baseURL: USERDATA_SERVER_URL,
     headers: {
         "Contene-Type": "multipart/form-data",
     },

@@ -1,7 +1,9 @@
 import axios from "axios";
 
+const USERDATA_SERVER_URL = import.meta.env.VITE_TESTDATA_SERVER_URL;
+
 export const testInstance = axios.create({
-    baseURL: "http://localhost:5000",
+    baseURL: USERDATA_SERVER_URL,
 });
 
 testInstance.interceptors.response.use(

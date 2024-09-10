@@ -1,12 +1,12 @@
 import useInput from "../hooks/useInput";
-import useSignup from "../hooks/useSignup";
+import useSignupPage from "../hooks/useSignupPage";
 
 const Signup = () => {
     const [userId, handleUserId] = useInput();
     const [userPassword, handleUserPassword] = useInput();
     const [userNickname, handleUserNickname] = useInput();
     const [userPasswordCheck, handleUserPasswordCheck] = useInput();
-    const { handleOnSubmit, isStringLengthOverFour } = useSignup();
+    const { handleOnSubmit, isStringLengthOverFour } = useSignupPage();
     const isPasswordsEqual = userPassword === userPasswordCheck;
     const isReadyToRegister =
         userId &&

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { handleSignup } from "../apis/authApi";
 
-const useSignup = () => {
+const useSignupPage = () => {
     const navigate = useNavigate();
     const isStringLengthOverFour = (str) => {
         return str.length >= 4 ? true : false;
@@ -25,4 +25,4 @@ const useSignup = () => {
         isStringLengthOverFour,
     };
 };
-export default useSignup;
+export default useSignupPage;

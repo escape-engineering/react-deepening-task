@@ -1,35 +1,20 @@
 import React from "react";
 import useInput from "../hooks/useInput";
-import { useNavigate } from "react-router-dom";
-import { handleLogin } from "../apis/authApi";
-import { useLogin } from "../zustand/useAuthStore";
+import useLoginPage from "../hooks/useLoginPage";
 
 const Login = () => {
-    const navigate = useNavigate();
     const [userId, handleUserId] = useInput("");
     const [userPassword, handleUserPassword] = useInput("");
 
     const isReadyToLogin = userId && userPassword;
 
-    const saveUserInfo = useLogin();
-    const handleOnSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const data = await handleLogin({ id: userId, password: userPassword });
-            console.log("data :>> ", data);
-            if (data.success) {
-                alert("로그인 성공!");
-                saveUserInfo(data);
-                localStorage.setItem("accessToken", data.accessToken);
-                navigate("/");
-            }
-        } catch (error) {
-            if (error.status === 401) alert("아이디나 비밀번호가 올바르지 않습니다!");
-        }
-    };
+    const { handleOnSubmit } = useLoginPage();
 
     return (
-        <form className="flex flex-col justify-center items-center gap-5" onSubmit={handleOnSubmit}>
+        <form
+            className="flex flex-col justify-center items-center gap-5"
+            onSubmit={(e) => handleOnSubmit(e, userId, userPassword)}
+        >
             <input
                 className="border-solid border-gray-300 border-2 w-96 h-16 rounded-3xl indent-5"
                 type="text"

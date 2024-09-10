@@ -6,6 +6,8 @@ import Test from "../pages/Test";
 import TestResult from "../pages/TestResult";
 import Layout from "../components/Layout";
 import Profile from "../pages/Profile";
+import PrivateRoute from "./PrivateRoute";
+import AuthRoute from "./AuthRoute";
 
 const Router = () => {
     return (
@@ -13,11 +15,15 @@ const Router = () => {
             <Layout>
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/signup" element={<Signup />} />
-                    <Route path="/profile" element={<Profile />} />
-                    <Route path="/test/:testid" element={<Test />} />
-                    <Route path="/testresult/:testid" element={<TestResult />} />
+                    <Route element={<AuthRoute />}>
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/signup" element={<Signup />} />
+                    </Route>
+                    <Route element={<PrivateRoute />}>
+                        <Route path="/profile" element={<Profile />} />
+                        <Route path="/test/:testid" element={<Test />} />
+                        <Route path="/testresult/:testid" element={<TestResult />} />
+                    </Route>
                 </Routes>
             </Layout>
         </BrowserRouter>

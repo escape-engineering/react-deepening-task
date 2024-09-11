@@ -4,7 +4,7 @@ import { handleSignup } from "../apis/authApi";
 const useSignupPage = () => {
     const navigate = useNavigate();
     const isStringLengthOverFour = (str) => {
-        return str.length >= 4 ? true : false;
+        return str.length >= 4;
     };
 
     const handleOnSubmit = async (e, userId, userPassword, userNickname) => {

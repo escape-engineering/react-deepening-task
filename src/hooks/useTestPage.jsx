@@ -7,7 +7,7 @@ import { calculateMBTI } from "../utils/mbtiCalculator";
 const useTestPage = () => {
     const { testid } = useParams();
     const targetQuestions = questions[testid];
-    const { mutate } = usePostMyTestMutation(targetQuestions.testTitle);
+    const { isPending, mutate } = usePostMyTestMutation(targetQuestions.testTitle);
     const [answers, setAnswers] = useState(Array.from({ length: targetQuestions.queList.length }));
 
     const handleAnswers = (idx, selected) => {
@@ -33,6 +33,6 @@ const useTestPage = () => {
         }
     };
 
-    return { handleSubmit, targetQuestions, handleAnswers };
+    return { handleSubmit, targetQuestions, handleAnswers, isPending };
 };
 export default useTestPage;

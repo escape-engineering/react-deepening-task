@@ -1,10 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useIsLogin, useLogout } from "../zustand/useAuthStore";
+import { useIsLoggedin, useLogout } from "../zustand/useAuthStore";
 
 const Layout = ({ children }) => {
     const navigate = useNavigate();
 
-    const isLogin = useIsLogin();
+    const isLogin = useIsLoggedin();
     const setLogout = useLogout();
 
     const handleLogout = () => {

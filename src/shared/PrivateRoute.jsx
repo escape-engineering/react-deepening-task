@@ -1,8 +1,8 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useIsLogin } from "../zustand/useAuthStore";
+import { useIsLoggedin } from "../zustand/useAuthStore";
 
 const PrivateRoute = () => {
-    const isLogin = useIsLogin();
+    const isLogin = useIsLoggedin();
 
     if (isLogin === undefined) {
         return null;

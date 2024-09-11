@@ -1,10 +1,22 @@
+import Modal from "../components/common/Modal";
 import TestResultItem from "../components/testresultpage/TestResultItem";
 import useTestResultPage from "../hooks/useTestResultPage";
 
 const TestResult = () => {
     const { userMBTIsLoading, userMBTIsError, refetch, goToHome, userMBTIs } = useTestResultPage();
 
-    if (userMBTIsLoading) return <div>Loading...</div>;
+    if (userMBTIsLoading)
+        return (
+            <>
+                <div className="flex flex-col justify-center items-center gap-3">
+                    <TestResultItem />
+                    <TestResultItem />
+                    <TestResultItem />
+                    <TestResultItem />
+                </div>
+                <Modal />
+            </>
+        );
     if (userMBTIsError)
         return (
             <div>

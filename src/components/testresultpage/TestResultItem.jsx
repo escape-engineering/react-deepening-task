@@ -2,7 +2,13 @@ import React from "react";
 import { MBTIDESC } from "../../constants";
 import useTestResultPage from "../../hooks/useTestResultPage";
 
-const TestResultItem = ({ mbti }) => {
+const skeletonMBTI = {
+    userId: "",
+    nickname: "",
+    result: "",
+};
+
+const TestResultItem = ({ mbti = skeletonMBTI }) => {
     const { userId, testid, handleDelete, handleToggle } = useTestResultPage();
     return (
         <div className="border-solid border-[#644d21] border-8  rounded-[20px] bg-[#4A655A] flex flex-col w-[600px] p-5">
